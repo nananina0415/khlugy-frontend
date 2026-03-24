@@ -36,3 +36,9 @@ dist-ssr
 !.yarn/versions
 
 *.tsbuildinfo
+
+# wrangler files
+.wrangler
+.dev.vars*
+!.dev.vars.example
+!.env.example
