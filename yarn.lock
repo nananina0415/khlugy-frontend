@@ -2238,7 +2238,7 @@ __metadata:
 
 "@khlug/common-module@github:nananina0415/khlug-frontend-common":
   version: 0.1.0
-  resolution: "@khlug/common-module@https://github.com/nananina0415/khlug-frontend-common.git#commit=906a26e8fea202df2b42aaeb25e69c8aecd49dd0"
+  resolution: "@khlug/common-module@https://github.com/nananina0415/khlug-frontend-common.git#commit=c215eef99b31651dad6bc5b8039703c8a3b65d81"
   dependencies:
     classnames: "npm:^2.5.1"
   peerDependencies:
@@ -2250,7 +2250,7 @@ __metadata:
     lucide-react: ^0
     react: ^18
     react-dom: ^18
-  checksum: 10c0/55add98f1e7631d15f934b3f8b2df0dd724b3d6f3094a19a8b2dbdf0352e375d4baee04a4e5237d0399a19f6b7b52865cb474913a64ab6501fc0223426689e1b
+  checksum: 10c0/a3ed6828f40e376a6b4e7d61890212b4be4179bd77cd1c4c0cab83ac9b8cebc12c6ba53a642f7fe7a412a525b0c948c9ae26258049e8a8073b4f69704d33515c
   languageName: node
   linkType: hard
 
