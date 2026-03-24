@@ -4,11 +4,12 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
+import MainPage from "./pages/main";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<div>Hello KHLUG</div>} />,
+      <Route path="/" element={<MainPage />} />,
     ),
     {
       future: {

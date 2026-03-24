@@ -2236,9 +2236,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@khlug/common-module@github:nananina0415/khlug-frontend-common#v0.1.0":
+"@khlug/common-module@github:nananina0415/khlug-frontend-common#v0.1.2":
   version: 0.1.0
-  resolution: "@khlug/common-module@https://github.com/nananina0415/khlug-frontend-common.git#commit=c215eef99b31651dad6bc5b8039703c8a3b65d81"
+  resolution: "@khlug/common-module@https://github.com/nananina0415/khlug-frontend-common.git#commit=3f8ee0f3a898c3d83c4022d5ff49050f87f8ef30"
   dependencies:
     classnames: "npm:^2.5.1"
   peerDependencies:
@@ -2250,7 +2250,7 @@ __metadata:
     lucide-react: ^0
     react: ^18
     react-dom: ^18
-  checksum: 10c0/a3ed6828f40e376a6b4e7d61890212b4be4179bd77cd1c4c0cab83ac9b8cebc12c6ba53a642f7fe7a412a525b0c948c9ae26258049e8a8073b4f69704d33515c
+  checksum: 10c0/84c283e3863b2e396fc8fc409aab0f1780ff853affd67bf61913f6d44546fdc3eee6e5e2abcc52e9ee47d45f4014c22f477ef0aa80c279c26591fee3a4b90750
   languageName: node
   linkType: hard
 
@@ -4081,7 +4081,7 @@ __metadata:
     "@fortawesome/fontawesome-svg-core": "npm:^6.6.0"
     "@fortawesome/free-solid-svg-icons": "npm:^6.6.0"
     "@fortawesome/react-fontawesome": "npm:^0.2.2"
-    "@khlug/common-module": "github:nananina0415/khlug-frontend-common#v0.1.0"
+    "@khlug/common-module": "github:nananina0415/khlug-frontend-common#v0.1.2"
     "@tanstack/eslint-plugin-query": "npm:^5.60.1"
     "@tanstack/react-query": "npm:^5.59.20"
     "@types/jest": "npm:^29.5.14"
