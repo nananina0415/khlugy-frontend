@@ -3,7 +3,7 @@ import { KhlugIcon, useCurrentUser } from "@khlug/common-module";
 
 export default function HeroBanner() {
   const { data: user } = useCurrentUser();
-  const isInternal = !!user;
+  const isInternal = !!user?.id;
 
   return (
     <Box
@@ -43,14 +43,19 @@ export default function HeroBanner() {
             수 있습니다.
           </Text>
           <br />
-          <Text mb="6">원하는 서비스를 선택해 바로 이용해보세요.</Text>
+          <Text mb="6">
+            {isInternal
+              ? "여러분이 만든 서비스를 세상에 공개해보세요."
+              : "원하는 서비스를 선택해 바로 이용해보세요."}
+          </Text>
           <a href="https://khlug.org" target="_blank" rel="noreferrer">
             <Flex
               display="inline-flex"
-              align="center"
+              alignItems="center"
               gap="2"
-              px="4"
-              py="2"
+              p="2"
+              pl="4"
+              pr="4"
               border="1px solid"
               borderColor="gray.300"
               borderRadius="full"
@@ -59,7 +64,9 @@ export default function HeroBanner() {
               fontWeight="medium"
               _hover={{ borderColor: "blue.400", color: "blue.500" }}
             >
-              <KhlugIcon />
+              <Box pb="8x">
+                <KhlugIcon />
+              </Box>
               경희대학교 중앙 IT 동아리 쿠러그
             </Flex>
           </a>

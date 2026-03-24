@@ -10,7 +10,9 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import "dayjs/locale/ko";
 
 import App from "./App.tsx";
-import { system } from "@khlug/common-module";
+import { system, apiClient } from "@khlug/common-module";
+
+apiClient.defaults.baseURL = import.meta.env.VITE_API_V2_BASE_URL;
 
 import "@khlug/common-module/style";
 import "react-toastify/dist/ReactToastify.css";
