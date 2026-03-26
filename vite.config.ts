@@ -12,9 +12,9 @@ export default defineConfig(({ mode }) => {
       VitePWA({
         registerType: "autoUpdate",
         manifest: {
-          name: "PLACEHOLDER_app-name",
-          short_name: "PLACEHOLDER_app-short-name",
-          description: "PLACEHOLDER_app-description",
+          name: "쿠러기",
+          short_name: "쿠러기",
+          description: "쿠러기들이 만든 꾸러기 앱 꾸러미",
           theme_color: "#ffffff",
           background_color: "#ffffff",
           display: "standalone",

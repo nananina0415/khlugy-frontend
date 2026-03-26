@@ -17,7 +17,7 @@ export default function HeroBanner() {
         <Flex direction="column" align="center" gap="4">
           <Image src="/khulugy_logo.png" alt="쿠러기 로고" h="16" />
           <Text fontWeight="semibold" fontSize="2xl">
-            쿠러기가 만든 꾸러기 앱 꾸러미
+            쿠러기들이 만든 꾸러기 앱 꾸러미
           </Text>
           <Text fontSize="lg" color="gray.500">
             {isInternal
