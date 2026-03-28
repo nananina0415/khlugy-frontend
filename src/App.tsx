@@ -5,11 +5,17 @@ import {
   RouterProvider,
 } from "react-router-dom";
 import MainPage from "./pages/main";
+import SubmitPage from "./pages/member/submit";
+import SubmissionsPage from "./pages/manage/submissions";
 
 function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
-      <Route path="/" element={<MainPage />} />,
+      <>
+        <Route path="/" element={<MainPage />} />
+        <Route path="/submit" element={<SubmitPage />} />
+        <Route path="/manage/submissions" element={<SubmissionsPage />} />
+      </>
     ),
     {
       future: {
