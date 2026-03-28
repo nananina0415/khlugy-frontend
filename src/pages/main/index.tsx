@@ -1,4 +1,4 @@
-import { MainLayout } from "@khlug/common-module";
+import KhlugyLayout from "../../layouts/KhlugyLayout";
 import HeroBanner from "../../features/main/HeroBanner";
 import ServiceCard from "../../features/main/ServiceCard";
 
@@ -10,7 +10,7 @@ const services = [
 
 export default function MainPage() {
   return (
-    <MainLayout logoUrl="/khulugy_logo.png" logoHref="/">
+    <KhlugyLayout>
       <div style={{ padding: "32px", display: "flex", flexDirection: "column", gap: "24px" }}>
         <HeroBanner />
         <div style={{ display: "grid", gridTemplateColumns: "repeat(3, 1fr)", gap: "16px" }}>
@@ -19,6 +19,6 @@ export default function MainPage() {
           ))}
         </div>
       </div>
-    </MainLayout>
+    </KhlugyLayout>
   );
 }
