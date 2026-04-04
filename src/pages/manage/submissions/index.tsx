@@ -17,15 +17,19 @@ const MOCK_SUBMISSIONS = [
 ];
 
 const STATUS_LABEL: Record<string, string> = {
-  pending: "검토 중",
+  submitted: "접수",
+  in_review: "검토중",
   approved: "승인",
-  rejected: "반려",
+  on_hold: "보류",
+  returned: "반려",
 };
 
 const STATUS_COLOR: Record<string, string> = {
-  pending: "yellow",
+  submitted: "gray",
+  in_review: "yellow",
   approved: "green",
-  rejected: "red",
+  on_hold: "orange",
+  returned: "red",
 };
 
 export default function SubmissionsPage() {
