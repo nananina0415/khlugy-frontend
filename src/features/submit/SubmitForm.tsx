@@ -550,11 +550,17 @@ export default function SubmitForm() {
               <Portal>
                 <Select.Positioner>
                   <Select.Content>
-                    {groupCollection.items.map((item) => (
-                      <Select.Item key={item.value} item={item}>
-                        {item.label}
+                    {groupCollection.items.length === 0 ? (
+                      <Select.Item item={{ label: "참여중인 그룹이 없습니다", value: "" }} _disabled={{ opacity: 1, cursor: "default" }} aria-disabled="true">
+                        참여중인 그룹이 없습니다
                       </Select.Item>
-                    ))}
+                    ) : (
+                      groupCollection.items.map((item) => (
+                        <Select.Item key={item.value} item={item}>
+                          {item.label}
+                        </Select.Item>
+                      ))
+                    )}
                   </Select.Content>
                 </Select.Positioner>
               </Portal>
