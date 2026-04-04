@@ -642,6 +642,10 @@ export default function SubmitForm() {
         {/* 호스팅 옵션 */}
         <Box>
           <SectionTitle>호스팅 옵션</SectionTitle>
+          <Text fontSize="sm" color="gray.500">
+            여기에 입력하는 링크는 운영진 검토용으로만 사용되며, 서비스 소개 페이지에는 표시되지 않습니다.<br />
+            배포 링크, 레포지토리, 소개 페이지 등 방문자에게 공개하고 싶은 내용은 서비스 소개 문구에 직접 작성해 주세요.
+          </Text>
           <Stack gap="6">
             <HostingSection
               id="field-frontend"
