@@ -141,9 +141,15 @@ function HostingSection({
             onChange={(e) => onUrlChange(e.target.value)}
           />
           {urlError ? (
-            <Text fontSize="xs" color="red.400" mt="1">{urlError}</Text>
-          ) : selfHint && (
-            <Text fontSize="xs" color="gray.400" mt="1">{selfHint}</Text>
+            <Text fontSize="xs" color="red.400" mt="1">
+              {urlError}
+            </Text>
+          ) : (
+            selfHint && (
+              <Text fontSize="xs" color="gray.400" mt="1">
+                {selfHint}
+              </Text>
+            )
           )}
         </Box>
       )}
@@ -156,9 +162,15 @@ function HostingSection({
             onChange={(e) => onRepoChange(e.target.value)}
           />
           {repoError ? (
-            <Text fontSize="xs" color="red.400" mt="1">{repoError}</Text>
-          ) : requestHint && (
-            <Text fontSize="xs" color="gray.400" mt="1">{requestHint}</Text>
+            <Text fontSize="xs" color="red.400" mt="1">
+              {repoError}
+            </Text>
+          ) : (
+            requestHint && (
+              <Text fontSize="xs" color="gray.400" mt="1">
+                {requestHint}
+              </Text>
+            )
           )}
         </Box>
       )}
@@ -198,10 +210,16 @@ export default function SubmitForm() {
     backendUrl?: string;
     backendRepo?: string;
   }>({});
-  const [nameCheckStatus, setNameCheckStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
+  const [nameCheckStatus, setNameCheckStatus] = useState<
+    "idle" | "checking" | "available" | "taken"
+  >("idle");
   const debounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-  const [subdomainCheckStatus, setSubdomainCheckStatus] = useState<"idle" | "checking" | "available" | "taken">("idle");
-  const subdomainDebounceTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const [subdomainCheckStatus, setSubdomainCheckStatus] = useState<
+    "idle" | "checking" | "available" | "taken"
+  >("idle");
+  const subdomainDebounceTimerRef = useRef<ReturnType<
+    typeof setTimeout
+  > | null>(null);
   const [descriptionPreview, setDescriptionPreview] = useState(false);
   const [creatorColumn, setCreatorColumn] = useState(false);
   const flexRef = useRef<HTMLDivElement | null>(null);
@@ -273,7 +291,10 @@ export default function SubmitForm() {
   const submitMutation = useMutation({
     mutationFn: ServiceRegistrationApi.submitServiceRegistration,
     onSuccess: () => {
-      toast.success("서비스 등록 신청이 완료되었습니다.", { autoClose: 1000, hideProgressBar: true });
+      toast.success("서비스 등록 신청이 완료되었습니다.", {
+        autoClose: 1000,
+        hideProgressBar: true,
+      });
       navigate("/my");
     },
   });
@@ -282,7 +303,10 @@ export default function SubmitForm() {
   const { data: groupMembers = [] } = useGroupMembers(groupId);
 
   const groupCollection = useMemo(
-    () => createListCollection({ items: groups.map((g) => ({ label: g.name, value: g.groupId })) }),
+    () =>
+      createListCollection({
+        items: groups.map((g) => ({ label: g.name, value: g.groupId })),
+      }),
     [groups],
   );
 
@@ -327,12 +351,14 @@ export default function SubmitForm() {
       setSubdomainCheckStatus("idle");
       return;
     }
-    if (subdomainDebounceTimerRef.current) clearTimeout(subdomainDebounceTimerRef.current);
+    if (subdomainDebounceTimerRef.current)
+      clearTimeout(subdomainDebounceTimerRef.current);
     subdomainDebounceTimerRef.current = setTimeout(() => {
       checkSubdomain(subdomain.name);
     }, 500);
     return () => {
-      if (subdomainDebounceTimerRef.current) clearTimeout(subdomainDebounceTimerRef.current);
+      if (subdomainDebounceTimerRef.current)
+        clearTimeout(subdomainDebounceTimerRef.current);
     };
   }, [subdomain.name, checkSubdomain]);
 
@@ -358,29 +384,48 @@ export default function SubmitForm() {
     if (!serviceName.trim()) newErrors.serviceName = "서비스명을 입력해주세요.";
     if (!category) newErrors.category = "카테고리를 선택해주세요.";
     if (!groupId) newErrors.groupId = "그룹을 선택해주세요.";
-    if (nameCheckStatus === "taken") newErrors.serviceName = "이미 사용 중인 이름입니다.";
-    if (groupId && selectedMemberIds.length === 0) newErrors.participants = "그룹원을 한 명 이상 선택해주세요.";
-    if (frontend.option === "self" && !frontend.url.trim()) newErrors.frontendUrl = "URL을 입력해주세요.";
-    if (frontend.option === "request" && !frontend.repo.trim()) newErrors.frontendRepo = "저장소 주소를 입력해주세요.";
-    if (backend.option === "self" && !backend.url.trim()) newErrors.backendUrl = "URL을 입력해주세요.";
-    if (backend.option === "request" && !backend.repo.trim()) newErrors.backendRepo = "저장소 주소를 입력해주세요.";
+    if (nameCheckStatus === "taken")
+      newErrors.serviceName = "이미 사용 중인 이름입니다.";
+    if (groupId && selectedMemberIds.length === 0)
+      newErrors.participants = "그룹원을 한 명 이상 선택해주세요.";
+    if (frontend.option === "self" && !frontend.url.trim())
+      newErrors.frontendUrl = "URL을 입력해주세요.";
+    if (frontend.option === "request" && !frontend.repo.trim())
+      newErrors.frontendRepo = "저장소 주소를 입력해주세요.";
+    if (backend.option === "self" && !backend.url.trim())
+      newErrors.backendUrl = "URL을 입력해주세요.";
+    if (backend.option === "request" && !backend.repo.trim())
+      newErrors.backendRepo = "저장소 주소를 입력해주세요.";
     const allErrors = { ...errors, ...newErrors };
     setErrors(allErrors);
-    if (Object.values(allErrors).some(Boolean) || subdomainCheckStatus === "taken") {
+    if (
+      Object.values(allErrors).some(Boolean) ||
+      subdomainCheckStatus === "taken"
+    ) {
       const errorIdOrder = [
-        { key: "serviceName" as keyof typeof allErrors, id: "field-serviceName" },
+        {
+          key: "serviceName" as keyof typeof allErrors,
+          id: "field-serviceName",
+        },
         { key: "category" as keyof typeof allErrors, id: "field-category" },
         { key: "groupId" as keyof typeof allErrors, id: "field-groupId" },
-        { key: "participants" as keyof typeof allErrors, id: "field-participants" },
+        {
+          key: "participants" as keyof typeof allErrors,
+          id: "field-participants",
+        },
         { key: "frontendUrl" as keyof typeof allErrors, id: "field-frontend" },
         { key: "frontendRepo" as keyof typeof allErrors, id: "field-frontend" },
         { key: "backendUrl" as keyof typeof allErrors, id: "field-backend" },
         { key: "backendRepo" as keyof typeof allErrors, id: "field-backend" },
       ];
       const firstError = errorIdOrder.find(({ key }) => allErrors[key]);
-      const scrollId = firstError?.id ?? (subdomainCheckStatus === "taken" ? "field-subdomain" : null);
+      const scrollId =
+        firstError?.id ??
+        (subdomainCheckStatus === "taken" ? "field-subdomain" : null);
       if (scrollId) {
-        document.getElementById(scrollId)?.scrollIntoView({ behavior: "smooth", block: "center" });
+        document
+          .getElementById(scrollId)
+          ?.scrollIntoView({ behavior: "smooth", block: "center" });
       }
       return;
     }
@@ -415,24 +460,34 @@ export default function SubmitForm() {
               value={serviceName}
               onChange={(e) => {
                 setServiceName(e.target.value);
-                if (errors.serviceName) setErrors((prev) => ({ ...prev, serviceName: undefined }));
+                if (errors.serviceName)
+                  setErrors((prev) => ({ ...prev, serviceName: undefined }));
               }}
               onBlur={() => {
-                if (debounceTimerRef.current) clearTimeout(debounceTimerRef.current);
+                if (debounceTimerRef.current)
+                  clearTimeout(debounceTimerRef.current);
                 checkName(serviceName);
               }}
             />
             {errors.serviceName && (
-              <Text fontSize="xs" color="red.400" mt="1">{errors.serviceName}</Text>
+              <Text fontSize="xs" color="red.400" mt="1">
+                {errors.serviceName}
+              </Text>
             )}
             {!errors.serviceName && nameCheckStatus === "checking" && (
-              <Text fontSize="xs" color="gray.400" mt="1">중복 확인 중...</Text>
+              <Text fontSize="xs" color="gray.400" mt="1">
+                중복 확인 중...
+              </Text>
             )}
             {!errors.serviceName && nameCheckStatus === "available" && (
-              <Text fontSize="xs" color="green.500" mt="1">사용 가능한 이름입니다.</Text>
+              <Text fontSize="xs" color="green.500" mt="1">
+                사용 가능한 이름입니다.
+              </Text>
             )}
             {!errors.serviceName && nameCheckStatus === "taken" && (
-              <Text fontSize="xs" color="red.400" mt="1">이미 사용 중인 이름입니다.</Text>
+              <Text fontSize="xs" color="red.400" mt="1">
+                이미 사용 중인 이름입니다.
+              </Text>
             )}
           </Box>
           <Box id="field-category">
@@ -442,7 +497,8 @@ export default function SubmitForm() {
               value={category ? [category] : []}
               onValueChange={(e) => {
                 setCategory(e.value[0]);
-                if (errors.category) setErrors((prev) => ({ ...prev, category: undefined }));
+                if (errors.category)
+                  setErrors((prev) => ({ ...prev, category: undefined }));
               }}
               size="sm"
             >
@@ -465,7 +521,9 @@ export default function SubmitForm() {
               </Portal>
             </Select.Root>
             {errors.category && (
-              <Text fontSize="xs" color="red.400" mt="1">{errors.category}</Text>
+              <Text fontSize="xs" color="red.400" mt="1">
+                {errors.category}
+              </Text>
             )}
           </Box>
           <Box id="field-groupId">
@@ -476,7 +534,8 @@ export default function SubmitForm() {
               onValueChange={(e) => {
                 setGroupId(e.value[0]);
                 setSelectedMemberIds([]);
-                if (errors.groupId) setErrors((prev) => ({ ...prev, groupId: undefined }));
+                if (errors.groupId)
+                  setErrors((prev) => ({ ...prev, groupId: undefined }));
               }}
               size="sm"
             >
@@ -499,7 +558,9 @@ export default function SubmitForm() {
               </Portal>
             </Select.Root>
             {errors.groupId && (
-              <Text fontSize="xs" color="red.400" mt="1">{errors.groupId}</Text>
+              <Text fontSize="xs" color="red.400" mt="1">
+                {errors.groupId}
+              </Text>
             )}
           </Box>
         </Stack>
@@ -514,7 +575,10 @@ export default function SubmitForm() {
               flexDir={creatorColumn ? "column" : "row"}
               ref={flexRef}
             >
-              <Box id="field-participants" style={{ flex: "1 1 0", minWidth: 0 }}>
+              <Box
+                id="field-participants"
+                style={{ flex: "1 1 0", minWidth: 0 }}
+              >
                 <Box style={{ minHeight: externalHeaderHeight }}>
                   <FieldLabel>그룹원</FieldLabel>
                 </Box>
@@ -525,7 +589,11 @@ export default function SubmitForm() {
                       checked={selectedMemberIds.includes(member.memberId)}
                       onCheckedChange={() => {
                         toggleMember(member.memberId);
-                        if (errors.participants) setErrors((prev) => ({ ...prev, participants: undefined }));
+                        if (errors.participants)
+                          setErrors((prev) => ({
+                            ...prev,
+                            participants: undefined,
+                          }));
                       }}
                     >
                       <Checkbox.HiddenInput />
@@ -535,7 +603,9 @@ export default function SubmitForm() {
                   ))}
                 </Stack>
                 {errors.participants && (
-                  <Text fontSize="xs" color="red.400" mt="2">{errors.participants}</Text>
+                  <Text fontSize="xs" color="red.400" mt="2">
+                    {errors.participants}
+                  </Text>
                 )}
               </Box>
               <Box
@@ -631,7 +701,9 @@ export default function SubmitForm() {
             </Box>
           ) : (
             <Textarea
-              placeholder="서비스를 소개하는 문구를 입력하세요"
+              placeholder={
+                "서비스 소개 페이지에 표시될 내용을 자유롭게 작성해 주세요.\n서비스 설명, 팀 소개, 배포 링크, 레포지토리 등을 포함하면 좋습니다.\n\n마크다운 문법을 지원합니다."
+              }
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               rows={6}
@@ -642,28 +714,37 @@ export default function SubmitForm() {
         {/* 호스팅 옵션 */}
         <Box>
           <SectionTitle>호스팅 옵션</SectionTitle>
-          <Text fontSize="sm" color="gray.500">
-            여기에 입력하는 링크는 운영진 검토용으로만 사용되며, 서비스 소개 페이지에는 표시되지 않습니다.<br />
-            배포 링크, 레포지토리, 소개 페이지 등 방문자에게 공개하고 싶은 내용은 서비스 소개 문구에 직접 작성해 주세요.
-          </Text>
           <Stack gap="6">
+            <Text fontSize="sm" color="gray.500">
+              여기에 입력하는 링크는 운영진 검토용으로만 사용되며, 서비스 소개
+              페이지에는 표시되지 않습니다.
+              <br />
+              배포 링크, 레포지토리, 소개 페이지 등 방문자에게 공개하고 싶은
+              내용은 서비스 소개 문구에 직접 작성해 주세요.
+            </Text>
             <HostingSection
               id="field-frontend"
               label="프런트엔드"
               option={frontend.option}
               onChange={(v) => {
                 setFrontend((prev) => ({ ...prev, option: v }));
-                setErrors((prev) => ({ ...prev, frontendUrl: undefined, frontendRepo: undefined }));
+                setErrors((prev) => ({
+                  ...prev,
+                  frontendUrl: undefined,
+                  frontendRepo: undefined,
+                }));
               }}
               urlValue={frontend.url}
               onUrlChange={(v) => {
                 setFrontend((prev) => ({ ...prev, url: v }));
-                if (errors.frontendUrl) setErrors((prev) => ({ ...prev, frontendUrl: undefined }));
+                if (errors.frontendUrl)
+                  setErrors((prev) => ({ ...prev, frontendUrl: undefined }));
               }}
               repoValue={frontend.repo}
               onRepoChange={(v) => {
                 setFrontend((prev) => ({ ...prev, repo: v }));
-                if (errors.frontendRepo) setErrors((prev) => ({ ...prev, frontendRepo: undefined }));
+                if (errors.frontendRepo)
+                  setErrors((prev) => ({ ...prev, frontendRepo: undefined }));
               }}
               urlPlaceholder="https://your-service.com"
               selfHint="자체 프런트엔드 서버 주소를 적어주세요."
@@ -677,17 +758,23 @@ export default function SubmitForm() {
               option={backend.option}
               onChange={(v) => {
                 setBackend((prev) => ({ ...prev, option: v }));
-                setErrors((prev) => ({ ...prev, backendUrl: undefined, backendRepo: undefined }));
+                setErrors((prev) => ({
+                  ...prev,
+                  backendUrl: undefined,
+                  backendRepo: undefined,
+                }));
               }}
               urlValue={backend.url}
               onUrlChange={(v) => {
                 setBackend((prev) => ({ ...prev, url: v }));
-                if (errors.backendUrl) setErrors((prev) => ({ ...prev, backendUrl: undefined }));
+                if (errors.backendUrl)
+                  setErrors((prev) => ({ ...prev, backendUrl: undefined }));
               }}
               repoValue={backend.repo}
               onRepoChange={(v) => {
                 setBackend((prev) => ({ ...prev, repo: v }));
-                if (errors.backendRepo) setErrors((prev) => ({ ...prev, backendRepo: undefined }));
+                if (errors.backendRepo)
+                  setErrors((prev) => ({ ...prev, backendRepo: undefined }));
               }}
               urlPlaceholder="https://api.your-service.com"
               selfHint="자체 백엔드 서버 주소를 적어주세요."
@@ -726,7 +813,8 @@ export default function SubmitForm() {
                         }))
                       }
                       onBlur={() => {
-                        if (subdomainDebounceTimerRef.current) clearTimeout(subdomainDebounceTimerRef.current);
+                        if (subdomainDebounceTimerRef.current)
+                          clearTimeout(subdomainDebounceTimerRef.current);
                         checkSubdomain(subdomain.name);
                       }}
                     />
@@ -738,18 +826,20 @@ export default function SubmitForm() {
                     fontSize="xs"
                     mt="1"
                     color={
-                      subdomainCheckStatus === "available" ? "green.500"
-                      : subdomainCheckStatus === "taken" ? "red.400"
-                      : "gray.400"
+                      subdomainCheckStatus === "available"
+                        ? "green.500"
+                        : subdomainCheckStatus === "taken"
+                          ? "red.400"
+                          : "gray.400"
                     }
                   >
                     {subdomainCheckStatus === "available"
                       ? "사용 가능한 서브도메인입니다."
                       : subdomainCheckStatus === "taken"
-                      ? "이미 사용 중인 서브도메인입니다."
-                      : subdomainCheckStatus === "checking"
-                      ? "중복 확인 중..."
-                      : "쿠러기 도메인의 서브도메인으로 호스팅됩니다. 원하는 서브도메인을 적어주세요."}
+                        ? "이미 사용 중인 서브도메인입니다."
+                        : subdomainCheckStatus === "checking"
+                          ? "중복 확인 중..."
+                          : "쿠러기 도메인의 서브도메인으로 호스팅됩니다. 원하는 서브도메인을 적어주세요."}
                   </Text>
                 </Box>
               )}
