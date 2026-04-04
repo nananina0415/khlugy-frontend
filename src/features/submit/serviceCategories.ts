@@ -1,0 +1,1 @@
+export const SERVICE_CATEGORIES = ["게임", "유틸", "생산성", "소셜", "교육", "기타"];
