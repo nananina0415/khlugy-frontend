@@ -181,7 +181,7 @@ function HostingSection({
 export default function SubmitForm() {
   const [serviceName, setServiceName] = useState("");
   const [description, setDescription] = useState("");
-  const [groupId, setGroupId] = useState("");
+  const [selectedGroup, setSelectedGroup] = useState<{ id: string; name: string } | null>(null);
   const [category, setCategory] = useState("");
   const [selectedMemberIds, setSelectedMemberIds] = useState<number[]>([]);
   const [externalCreators, setExternalCreators] = useState<string[]>([]);
@@ -300,7 +300,7 @@ export default function SubmitForm() {
   });
 
   const { data: groups = [] } = useMyGroups();
-  const { data: groupMembers = [] } = useGroupMembers(groupId);
+  const { data: groupMembers = [] } = useGroupMembers(selectedGroup?.id ?? "");
 
   const groupCollection = useMemo(
     () =>
@@ -383,10 +383,10 @@ export default function SubmitForm() {
     const newErrors: typeof errors = {};
     if (!serviceName.trim()) newErrors.serviceName = "서비스명을 입력해주세요.";
     if (!category) newErrors.category = "카테고리를 선택해주세요.";
-    if (!groupId) newErrors.groupId = "그룹을 선택해주세요.";
+    if (!selectedGroup) newErrors.groupId = "그룹을 선택해주세요.";
     if (nameCheckStatus === "taken")
       newErrors.serviceName = "이미 사용 중인 이름입니다.";
-    if (groupId && selectedMemberIds.length === 0)
+    if (selectedGroup && selectedMemberIds.length === 0)
       newErrors.participants = "그룹원을 한 명 이상 선택해주세요.";
     if (frontend.option === "self" && !frontend.url.trim())
       newErrors.frontendUrl = "URL을 입력해주세요.";
@@ -432,7 +432,7 @@ export default function SubmitForm() {
     submitMutation.mutate({
       serviceName,
       description,
-      groupId,
+      groupId: Number(selectedGroup!.id),
       category,
       memberIds: selectedMemberIds,
       externalCreators,
@@ -530,9 +530,11 @@ export default function SubmitForm() {
             <FieldLabel required>그룹</FieldLabel>
             <Select.Root
               collection={groupCollection}
-              value={groupId ? [groupId] : []}
+              value={selectedGroup ? [selectedGroup.id] : []}
               onValueChange={(e) => {
-                setGroupId(e.value[0]);
+                const id = e.value[0];
+                const name = groups.find((g) => g.groupId === id)?.name ?? "";
+                setSelectedGroup(id ? { id, name } : null);
                 setSelectedMemberIds([]);
                 if (errors.groupId)
                   setErrors((prev) => ({ ...prev, groupId: undefined }));
@@ -566,7 +568,7 @@ export default function SubmitForm() {
         </Stack>
 
         {/* 참여자 */}
-        {groupId && (
+        {selectedGroup && (
           <Box ref={outerBoxCallbackRef}>
             <SectionTitle>참여자</SectionTitle>
             <Flex
