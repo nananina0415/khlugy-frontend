@@ -16,7 +16,7 @@ type SubdomainInfo = {
 export type SubmitServiceRegistrationRequest = {
   serviceName: string;
   description: string;
-  groupId: string;
+  groupId: number;
   category: string;
   memberIds: number[];
   externalCreators: string[];
@@ -27,9 +27,9 @@ export type SubmitServiceRegistrationRequest = {
 
 export const ServiceRegistrationApi = {
   checkServiceName: (serviceName: string) =>
-    apiClient.post<{ available: boolean }>("/khlugy/service-registration/check/service-name", { serviceName }),
+    apiClient.post<{ available: boolean }>("/khlugy/service-submission/check/service-name", { serviceName }),
   checkSubdomain: (subdomain: string) =>
-    apiClient.post<{ available: boolean }>("/khlugy/service-registration/check/subdomain", { subdomain }),
+    apiClient.post<{ available: boolean }>("/khlugy/service-submission/check/subdomain", { subdomain }),
   submitServiceRegistration: (body: SubmitServiceRegistrationRequest) =>
-    apiClient.post("/khlugy/service-registration", body),
+    apiClient.post("/khlugy/service-submission", body),
 };
